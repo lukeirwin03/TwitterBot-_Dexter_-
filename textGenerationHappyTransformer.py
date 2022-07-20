@@ -1,7 +1,5 @@
-from unittest import result
 from happytransformer import HappyGeneration, GENSettings
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
 
 def neoGPT(prompt):
     '''Method to generate and return a response to a prompt that is passed into the method using the GPT Neo Model.

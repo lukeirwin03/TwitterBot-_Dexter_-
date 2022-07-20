@@ -1,5 +1,6 @@
 import tweepy
 import configparser
+from time import sleep
 import textGenerationHappyTransformer as textGen
 
 config = configparser.ConfigParser()
@@ -63,12 +64,15 @@ def reply(api):
             message = (mention.text.split('HeyDexter', 1)[1])
             last_seen_id = mention.id
             store_id(last_seen_id, FILE)
-            api.update_status(status=('@' + mention.user.screen_name + ' ' + textGen.dialoGPT(message)), auto_populate_reply_metadata=True)
+            tweet_to_quote_url = f'http://twitter.com/{mention.user.screen_name}/status/{mention.id}'
+            api.update_status(status=('@' + mention.user.screen_name + ' ' + textGen.dialoGPT(message)), auto_populate_reply_metadata=True, attachment_url=tweet_to_quote_url)
             print('Replied to @'+mention.user.screen_name)
 
 def main():
     api = authenticate()
-    reply(api)
+    while True:
+        reply(api)
+        sleep(10)
 
 if __name__ == '__main__':
     main()
