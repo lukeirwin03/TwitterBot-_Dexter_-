@@ -28,18 +28,18 @@ def dialoGPT(prompt):
     model = AutoModelForCausalLM.from_pretrained(modelName)
 
     # encode the input and add end of string token
-    input_ids = tokenizer.encode(prompt + tokenizer.eos_token, return_tensors="pt")
+    inputs = tokenizer.encode(prompt + tokenizer.eos_token, return_tensors="pt")
     # generate a bot response
-    chat_history_ids = model.generate(
-        input_ids,
+    response = model.generate(
+        inputs,
         max_length=1000,
         do_sample=True,
         top_k=100,
-        temperature=0.85,
+        temperature=0.95,
         pad_token_id=tokenizer.eos_token_id
     )
     #print the output
-    output = tokenizer.decode(chat_history_ids[:, input_ids.shape[-1]:][0], skip_special_tokens=True)
+    output = tokenizer.decode(response[:, inputs.shape[-1]:][0], skip_special_tokens=True)
     return output
 
 if __name__ == '__main__':

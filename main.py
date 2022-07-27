@@ -72,7 +72,7 @@ def main():
     api = authenticate()
     while True:
         reply(api)
-        sleep(10)
+        sleep(15)
 
 if __name__ == '__main__':
     main()
