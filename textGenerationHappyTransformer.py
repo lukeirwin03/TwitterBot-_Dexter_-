@@ -28,18 +28,18 @@ def dialoGPT(prompt):
     model = AutoModelForCausalLM.from_pretrained(modelName)
 
     # encode the input and add end of string token
-    inputs = tokenizer.encode(prompt + tokenizer.eos_token, return_tensors="pt")
+    input = tokenizer.encode(prompt + tokenizer.eos_token, return_tensors="pt")
     # generate a bot response
     response = model.generate(
-        inputs,
-        max_length=1000,
+        input,
+        max_length=280,
         do_sample=True,
         top_k=100,
-        temperature=0.95,
+        temperature=.95,
         pad_token_id=tokenizer.eos_token_id
     )
     #print the output
-    output = tokenizer.decode(response[:, inputs.shape[-1]:][0], skip_special_tokens=True)
+    output = tokenizer.decode(response[:, input.shape[-1]:][0], skip_special_tokens=True)
     return output
 
 if __name__ == '__main__':
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     print(f'GPT Neo Model: {neoGPT(message)}')
     print()
-    print(f'GPT Dialo Model: {dialoGPT(message)}')
+    print(f'DialoGPT Model: {dialoGPT(message)}')
     
 
 # for later use 
